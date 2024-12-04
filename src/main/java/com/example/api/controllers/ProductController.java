@@ -2,6 +2,7 @@ package com.example.api.controllers;
 
 import com.example.api.Exception.RecordNotFoundException;
 import com.example.api.model.DTO.Producto_Request_Update;
+import com.example.api.model.Empresa;
 import com.example.api.model.Producto;
 import com.example.api.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/productos")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin("*")
 public class ProductController {
 
     @Autowired
@@ -71,6 +72,11 @@ public class ProductController {
         return new ResponseEntity<List<Producto>>(entity, new HttpHeaders(), HttpStatus.OK);
     }
 
+    @GetMapping("/company/{empresaId}/nombre/{nombre}")
+    public ResponseEntity< List<Producto>> getProductsByNombreAndEmpresaId(@PathVariable int empresaId, @PathVariable String nombre) {
+        List<Producto> entity = productoService.getProductsByNombreAndEmpresaId(nombre, empresaId);
+        return ResponseEntity.ok(entity);
+    }
 
     @PostMapping("/addProduct")
     public Producto guardarProducto(@RequestBody Producto producto) {

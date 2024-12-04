@@ -1,5 +1,6 @@
 package com.example.api.Repositories;
 
+import com.example.api.model.Empresa;
 import com.example.api.model.Producto;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,8 +28,15 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             nativeQuery = true)
     public List<Producto> getByCompany(int id);
 
-    //query para actualizar un producto por su nombre o su precioZ
 
+
+    //query para obtener productos por nombre según la empresa
+
+
+    @Query(value = "SELECT * FROM productos p WHERE p.id_empresa = :id AND p.nombre LIKE %:nombre%", nativeQuery = true)
+    List<Producto> findByNombreAndEmpresaId(@Param("nombre") String nombre, @Param("id") Integer id);
+
+    // query para actualizar un producto por su nombre o su precioZ
     @Modifying
     @Transactional
     @Query(value = "UPDATE productos as p SET p.nombre = :nuevoNombre, p.precio = :nuevoPrecio WHERE p.id = :productoId",

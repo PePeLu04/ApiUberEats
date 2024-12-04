@@ -2,6 +2,7 @@ package com.example.api.services;
 
 import com.example.api.Repositories.ProductoRepository;
 import com.example.api.model.DTO.Producto_Request_Update;
+import com.example.api.model.Empresa;
 import com.example.api.model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,10 @@ public class ProductService {
 
     public List<Producto> obtenerProductoPorTipo(String tipo) {
         return productoRepository.getByType(tipo);
+    }
+
+    public List<Producto> getProductsByNombreAndEmpresaId(String nombre, int id) {
+        return productoRepository.findByNombreAndEmpresaId(nombre, id);
     }
 
     public Producto guardarProducto(Producto producto) {

@@ -15,6 +15,8 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository empresaRepository;
 
+
+
     public List<Empresa> GetAllCompanies() {
         return empresaRepository.findAll();
     }

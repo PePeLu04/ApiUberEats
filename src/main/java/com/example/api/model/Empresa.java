@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Blob;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,11 +18,6 @@ public class Empresa {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
-
-    @JsonIgnoreProperties("empresas")
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "id_admin", nullable = false)
-    private Admin idAdmin;
 
     @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
@@ -35,14 +31,9 @@ public class Empresa {
     @Column(name = "puntuaje", nullable = false)
     private Integer puntuaje;
 
-
-    @JsonIgnoreProperties("empresas")
-    @ManyToMany(mappedBy = "empresas", fetch = FetchType.LAZY)
-    private List<Owner> owners;
-
-    @JsonIgnoreProperties({"empresas", "idOwner"})
-    @ManyToMany(mappedBy = "empresas", fetch = FetchType.LAZY)
-    private List<Asociacion> asociaciones;
+    @JsonIgnoreProperties("idEmpresa")
+    @OneToMany(mappedBy = "idEmpresa", fetch = FetchType.EAGER)
+    private List<Admin> admins;
 
     @JsonIgnoreProperties("idEmpresa")
     @OneToMany(mappedBy = "idEmpresa", fetch = FetchType.EAGER)

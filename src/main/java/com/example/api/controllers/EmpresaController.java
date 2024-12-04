@@ -1,6 +1,7 @@
 package com.example.api.controllers;
 
 import com.example.api.Exception.RecordNotFoundException;
+import com.example.api.Repositories.EmpresaRepository;
 import com.example.api.model.DTO.Company_Request_Update;
 import com.example.api.model.Empresa;
 import com.example.api.services.EmpresaService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.webjars.NotFoundException;
 
 import java.util.List;
 import java.util.Optional;

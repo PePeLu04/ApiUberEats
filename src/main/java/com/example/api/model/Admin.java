@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,21 +12,26 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "admin")
 public class Admin {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "usuario", nullable = false, length = 100)
-    private String usuario;
+    @Column(name = "username", nullable = false, length = 100)
+    private String username;
+
+    @Column(name = "dni", nullable = false, length = 100)
+    private String dni;
 
     @JsonIgnore()
-    @Column(name = "contrasena", nullable = false, length = 100)
-    private String contrasena;
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
 
-    @OneToMany(mappedBy = "idAdmin", fetch = FetchType.LAZY)
-    private List<Empresa> empresas;
-
+    @JsonIgnoreProperties("admins")
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "id_empresa", nullable = false)
+    private Empresa idEmpresa;
 
 }
